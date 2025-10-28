@@ -1,25 +1,25 @@
 // TODO: Refactor this code to follow clean naming conventions
 
-class Prod {
+class Product {
   constructor(
-    public n: string,
-    public p: number,
-    public q: number,
-    public d: boolean
+    public name: string,
+    public prize: number,
+    public quantity: number,
+    public available: boolean
   ) {}
 }
 
-class Usr {
+class Customer {
   constructor(
     public id: number,
-    public nm: string,
-    public e: string,
+    public name: string,
+    public email: string,
     public blocked: boolean,
-    public bal: number
+    public idkwthisthisvariable: number
   ) {}
 }
 
-class Ord {
+class Order {
   constructor(
     public no: number,
     public u: Usr,
