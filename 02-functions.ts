@@ -16,78 +16,71 @@ class RestaurantSystem {
   private orders: Order[] = [];
 
   processOrder(
-    name: string,
-    phone: string,
-    items: string[],
-    quantities: number[],
-    prices: number[],
-    address: string,
-    cardNumber: string
-  ): boolean {
-    if (name == "" || phone == "") {
-      console.log("Customer missing");
-      return false;
-    } else {
-      if (phone.length < 10) {
-        console.log("Bad phone");
-        return false;
-      } else {
-        if (items.length == 0) {
-          console.log("No items");
-          return false;
-        } else {
-          let subtotal = 0;
-          for (let i = 0; i < items.length; i++) {
-            if (quantities[i] <= 0) {
-              console.log("Bad qty");
-              return false;
-            }
-            subtotal += prices[i] * quantities[i];
-          }
-
-          let delivery = subtotal > 50 ? 0 : 5;
-          const tax = subtotal * 0.1;
-          const total = subtotal + delivery + tax;
-
-          if (address.length < 10) {
-            console.log("Bad addr");
-            return false;
-          } else {
-            if (cardNumber.length != 16) {
-              console.log("Bad card");
-              return false;
-            } else {
-              console.log("Charging: $" + total);
-
-              const orderId = Math.floor(Math.random() * 10000);
-              const order = new Order(
-                orderId,
-                name,
-                phone,
-                items,
-                quantities,
-                prices,
-                address
-              );
-
-              this.orders.push(order);
-
-              console.log("ORDER #" + orderId);
-              for (let i = 0; i < items.length; i++) {
-                console.log(items[i] + " x" + quantities[i]);
-              }
-              console.log("Total: $" + total);
-
-              console.log("KITCHEN: #" + orderId);
-              console.log("SMS to " + phone);
-
-              return true;
-            }
-          }
-        }
-      }
-    }
+  name: string,
+  phone: string,
+  items: string[],
+  quantities: number[],
+  prices: number[],
+  address: string,
+  cardNumber: string
+): boolean {
+  if (name == "" || phone == "") {
+    console.log("Customer missing");
+    return false;
   }
+
+  if (phone.length < 10) {
+    console.log("Bad phone");
+    return false;
+  }
+
+  if (items.length == 0) {
+    console.log("No items");
+    return false;
+  }
+
+  let subtotal = 0;
+  for (let i = 0; i < items.length; i++) {
+    if (quantities[i] <= 0) {
+      console.log("Bad qty");
+      return false;
+    }
+    subtotal += prices[i] * quantities[i];
+  }
+
+  const delivery = subtotal > 50 ? 0 : 5;
+  const tax = subtotal * 0.1;
+  const total = subtotal + delivery + tax;
+
+  if (address.length < 10) {
+    console.log("Bad addr");
+    return false;
+  }
+
+  if (cardNumber.length != 16) {
+    console.log("Bad card");
+    return false;
+  }
+
+  console.log("Charging: $" + total);
+
+  const orderId = Math.floor(Math.random() * 10000);
+  const order = new Order(orderId, name, phone, items, quantities, prices, address);
+
+  this.orders.push(order);
+
+  console.log("ORDER #" + orderId);
+  for (let i = 0; i < items.length; i++) {
+    console.log(items[i] + " x" + quantities[i]);
+  }
+
+  console.log("Total: $" + total);
+  console.log("KITCHEN: #" + orderId);
+  console.log("SMS to " + phone);
+
+  return true;
+}
+
 
   cancelOrder(orderId: number): void {
     for (let i = 0; i < this.orders.length; i++) {
